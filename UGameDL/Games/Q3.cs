@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Threading;
 using Iswenzz.UGameDL.UGameDL;
+using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using ShellProgressBar;
 
@@ -18,7 +19,7 @@ namespace Iswenzz.UGameDL.Games
         public override string DL_DIRNAME { get; protected set; }   = "q3";
         public override string DL_FILENAME { get; protected set; }  = "q3.zip";
         public override string DL_LAUNCHER { get; protected set; }  = "defrag_launcher_installer.exe";
-        public override string DL_URL { get; protected set; }       = "https://iswenzz.com:1337/fastdl/usermaps/mp_deathrun_boss/mp_deathrun_boss.iwd"; // "https://iswenzz.com:1337/games/q3/q3.zip"
+        public override string DL_URL { get; protected set; } = "https://iswenzz.com:1337/games/q3/q3.zip";
 
         /// <summary>
         /// Choose an installation directory.
@@ -95,6 +96,9 @@ namespace Iswenzz.UGameDL.Games
             proc.WaitForExit();
 
             // REGISTRY for the launcher
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\mDd\defrag launcher");
+            key.SetValue("enginepath", Path.Combine(outPath, "iDFex64.exe"));
+            key.SetValue("autostart", 1);
         }
     }
 }
