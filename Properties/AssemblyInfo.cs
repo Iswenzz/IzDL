@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Iswenzz.com")]
-[assembly: AssemblyProduct("Q3 Downloader")]
+[assembly: AssemblyProduct("UGameDL")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("Iswenzz.com")]
 [assembly: AssemblyCulture("")]
