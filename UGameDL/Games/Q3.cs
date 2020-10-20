@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Threading;
+using CSharpLib;
 using Iswenzz.UGameDL.UGameDL;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -84,21 +85,30 @@ namespace Iswenzz.UGameDL.Games
             Console.WriteLine("\nInstalling . . .\n");
 
             // Unzip the game
+            Console.WriteLine("Extract");
             string zipPath = Path.Combine(InstallDir, DL_DIRNAME, DL_FILENAME);
             string outPath = Path.Combine(InstallDir, DL_DIRNAME);
             using (ZipArchive archive = ZipFile.OpenRead(zipPath))
                 archive.ExtractToDirectory(outPath, true);
 
             // Start the launcher installer
+            Console.WriteLine("Launcher Install");
             Process proc = new Process();
             proc.StartInfo.FileName = Path.Combine(InstallDir, DL_DIRNAME, DL_LAUNCHER);
             proc.Start();
             proc.WaitForExit();
 
             // REGISTRY for the launcher
+            Console.WriteLine("Launcher Settings");
             RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\mDd\defrag launcher");
-            key.SetValue("enginepath", Path.Combine(outPath, "iDFex64.exe"));
+            key.SetValue("enginepath", Path.Combine(outPath, "iDFe.x64.exe"));
             key.SetValue("autostart", 1);
+
+            // Create Shortcut
+            Console.WriteLine("Game Shortcut");
+            Shortcut shortcut = new Shortcut();
+            shortcut.CreateShortcutToFile(Path.Combine(outPath, "iDFe.x64.exe"), 
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Q3.lnk"));
         }
     }
 }
