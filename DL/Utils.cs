@@ -1,5 +1,5 @@
 ﻿using System;
-using IWshRuntimeLibrary;
+using WindowsShortcutFactory;
 
 namespace Iswenzz.DL
 {
@@ -21,14 +21,15 @@ namespace Iswenzz.DL
             if (string.IsNullOrEmpty(targetFile) || string.IsNullOrEmpty(shortcutFile))
                 throw new ArgumentNullException();
 
-            WshShell shell = new();
-            IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutFile);
-            shortcut.TargetPath = targetFile;
-            shortcut.Description = description;
-            shortcut.Arguments = arguments;
-            shortcut.IconLocation = iconLocation;
-            shortcut.WorkingDirectory = workingDirectory;
-            shortcut.Save();
+            using WindowsShortcut shortcut = new()
+            {
+                Path = targetFile,
+                Description = description,
+                WorkingDirectory = workingDirectory,
+                IconLocation = iconLocation,
+                Arguments = arguments,
+            };
+            shortcut.Save(shortcutFile);
         }
     }
 }
